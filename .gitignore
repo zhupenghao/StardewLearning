@@ -1,0 +1,14 @@
+# .NET build files
+bin/
+obj/
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+
+# User-specific files
+*.user
+*.suo
+
+# Build logs
+*.log
