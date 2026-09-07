@@ -11,6 +11,7 @@ public class Game1 : Game
 
     private Texture2D _playerTexture;
     private Vector2 _playerPosition;
+    private float _playerSpeed = 200f;
 
     public Game1()
     {
@@ -39,7 +40,27 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
+            {
+                Exit();
+            }
+            //获取键盘操作
+            KeyboardState keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.W))
+            {
+                _playerPosition.Y -= 1;
+            }
+            if (keyboardState.IsKeyDown(Keys.S))
+            {
+                _playerPosition.Y += 1;
+            }
+            if (keyboardState.IsKeyDown(Keys.A))
+            {
+                _playerPosition.X -= 1;
+            }
+            if (keyboardState.IsKeyDown(Keys.D))
+            {
+                _playerPosition.X += 1;
+            }
 
         // TODO: Add your update logic here
 
