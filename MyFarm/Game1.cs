@@ -1,6 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MyFarm.Core;
+
 
 namespace MyFarm;
 
@@ -9,30 +12,37 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    private Texture2D _playerTexture;
-    private Vector2 _playerPosition;
-    private float _playerSpeed = 200f;
+    private GameState _gameState; // 游戏状态对象
 
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+
+        _graphics.PreferredBackBufferWidth = 1280;// 设置窗口宽度
+        _graphics.PreferredBackBufferHeight = 720;// 设置窗口高度
+
+        Window.Title = "桃源乡"; // 设置窗口标题
+
     }
 
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
-        _playerPosition = new Vector2(300, 200);
+        _gameState = new GameState(); // 初始化游戏状态对象
 
+        Console.WriteLine("桃源乡启动");
+        Console.WriteLine($"玩家: {_gameState.Player.Name}");
+        Console.WriteLine($"铜钱: {_gameState.Player.Stats.Money}");
+        Console.WriteLine($"耐力: {_gameState.Player.Stats.Stamina}/{_gameState.Player.Stats.MaxStamina}");
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        _playerTexture = new Texture2D(GraphicsDevice, 1, 1);
-        _playerTexture.SetData(new[] { Color.White });
+        
 
         // TODO: use this.Content to load your game content here
     }
@@ -40,27 +50,9 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                Exit();
-            }
-            //获取键盘操作
-            KeyboardState keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.W))
-            {
-                _playerPosition.Y -= 1;
-            }
-            if (keyboardState.IsKeyDown(Keys.S))
-            {
-                _playerPosition.Y += 1;
-            }
-            if (keyboardState.IsKeyDown(Keys.A))
-            {
-                _playerPosition.X -= 1;
-            }
-            if (keyboardState.IsKeyDown(Keys.D))
-            {
-                _playerPosition.X += 1;
-            }
+        {
+            Exit();
+        }
 
         // TODO: Add your update logic here
 
@@ -72,24 +64,9 @@ public class Game1 : Game
         // 将背景从蓝色变成绿色
         GraphicsDevice.Clear(Color.ForestGreen);
 
-        _spriteBatch.Begin();
-
-        _spriteBatch.Draw(
-            _playerTexture,
-              new Rectangle(
-            (int)_playerPosition.X,
-            (int)_playerPosition.Y,
-            40,
-            60
-        ),
-        Color.White
-    );
-
-        _spriteBatch.End();
-
         base.Draw(gameTime);
         // TODO: Add your drawing code here
 
-        base.Draw(gameTime);
+  
     }
 }
