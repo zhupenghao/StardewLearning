@@ -35,5 +35,18 @@ public class PlayerStats
 
 
     }
-
+    //3. 方法：花费耐力
+    public bool SpendStamina(int amount)
+    {
+        if (amount <= 0)
+        {
+            return false; // 无效的花费耐力数值
+        }
+        if (Stamina > amount)
+        {
+            Stamina -= amount; // 扣除耐力
+            return true; // 花费成功
+        }
+        return false; // 耐力不足，花费失败
+    }
 }
